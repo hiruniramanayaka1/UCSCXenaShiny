@@ -30,6 +30,14 @@ jobs:
         with:
           use-public-rspm: true
 
+      - name: Cache R package dependencies
+        uses: actions/cache@v4
+        with:
+          path: /home/runner/.local/lib/R/site-library
+          key: ${{ runner.os }}-R-${{ hashFiles('DESCRIPTION') }}
+          restore-keys: |
+            ${{ runner.os }}-R-
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::pkgdown, local::.
